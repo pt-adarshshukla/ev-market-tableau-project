@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title }}</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f4f6f8;
+      color: #222;
+    }
+
+    header {
+      background: #1f4e79;
+      color: #fff;
+      padding: 28px 20px;
+      text-align: center;
+    }
+
+    main {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .kpis {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .kpi {
+      flex: 1;
+      min-width: 200px;
+      background: #fff;
+      border-radius: 8px;
+      padding: 18px;
+      text-align: center;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, .1);
+    }
+
+    .kpi .value {
+      font-size: 28px;
+      font-weight: bold;
+      color: #1f4e79;
+    }
+
+    .kpi .label {
+      margin-top: 6px;
+      color: #555;
+    }
+
+    section {
+      background: #fff;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, .1);
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+
+    iframe {
+      width: 100%;
+      height: 800px;
+      border: 0;
+    }
+
+    li {
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+
+    footer {
+      text-align: center;
+      color: #777;
+      padding: 16px;
+    }
+
+    footer a {
+      color: #1f4e79;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    .header-author {
+      margin-top: 10px;
+      font-size: 15px;
+    }
+
+    .header-author a {
+      color: #ffde59;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .header-author a:hover {
+      text-decoration: underline;
+    }
+
+    .dashboard-header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding-bottom: 14px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid #e5e9f0;
+    }
+
+    .dashboard-title-area {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .dashboard-title-area h2 {
+      margin: 0;
+    }
+
+    .author-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #f0f4f9;
+      padding: 6px 14px;
+      border-radius: 24px;
+      border: 1px solid #dce4ed;
+    }
+
+    .avatar-circle {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #1f4e79;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+
+    .author-info {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+    }
+
+    .author-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #666;
+      line-height: 1.1;
+    }
+
+    .author-name-link {
+      color: #1f4e79;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 14px;
+      line-height: 1.3;
+    }
+
+    .author-name-link:hover {
+      text-decoration: underline;
+    }
+
+    .tableau-view-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #e96725;
+      color: #fff;
+      padding: 8px 14px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      transition: background 0.2s ease;
+    }
+
+    .tableau-view-btn:hover {
+      background: #d45618;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>{{ title }}</h1>
+    <p>A Tableau data analytics project on the global electric vehicle market</p>
+    {% if author_name %}
+    <div class="header-author">
+      <span>By <a href="{{ author_profile_url }}" target="_blank" rel="noopener noreferrer">{{ author_name }}</a></span>
+    </div>
+    {% endif %}
+  </header>
+
+  <main>
+    <div class="kpis">
+      {% for kpi in kpis %}
+      <div class="kpi">
+        <div class="value">{{ kpi.value }}</div>
+        <div class="label">{{ kpi.label }}</div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <section>
+      <div class="dashboard-header-bar">
+        <div class="dashboard-title-area">
+          <h2>Dashboard</h2>
+          {% if author_name %}
+          <div class="author-badge">
+            <div class="avatar-circle">AS</div>
+            <div class="author-info">
+              <span class="author-label">Author</span>
+              <a href="{{ author_profile_url }}" target="_blank" rel="noopener noreferrer" class="author-name-link">{{ author_name }}</a>
+            </div>
+          </div>
+          {% endif %}
+        </div>
+        {% if tableau_public_viz_url %}
+        <a href="{{ tableau_public_viz_url }}" target="_blank" rel="noopener noreferrer" class="tableau-view-btn">
+          <span>View on Tableau Public</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+        </a>
+        {% endif %}
+      </div>
+      {% if tableau_url %}
+      <iframe
+        src="{{ tableau_url }}"
+        allowfullscreen></iframe>
+      {% else %}
+      <p>The Tableau dashboard will appear here once it is published on Tableau Public and its link is added in
+        <code>app.py</code>.</p>
+      {% endif %}
+    </section>
+
+    <section>
+      <h2>Key Insights</h2>
+      <ul>
+        {% for item in insights %}
+        <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    Built by <a href="{{ author_profile_url }}" target="_blank" rel="noopener noreferrer">{{ author_name }}</a> with Tableau and Flask
+  </footer>
+</body>
+
+</html>
